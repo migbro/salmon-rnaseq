@@ -5,6 +5,7 @@ requirements:
     dockerPull: hubmap/salmon-grch38:2.1.11
   ResourceRequirement:
     ramMin: 28672
+    coresMin: $(inputs.threads)
 baseCommand: /opt/salmon_wrapper.py
 label: Run Salmon Alevin tool on FASTQ input
 
@@ -24,10 +25,11 @@ inputs:
     inputBinding:
       position: 2
   threads:
-    type: int
+    type: 'int?'
     inputBinding:
       position: 3
       prefix: "--threads"
+    default: 4
   expected_cell_count:
     type: int?
     inputBinding:

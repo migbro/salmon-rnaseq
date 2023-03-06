@@ -1,16 +1,20 @@
 cwlVersion: v1.0
 class: CommandLineTool
 label: RNA velocity analysis via scVelo
-hints:
-  DockerRequirement:
+requirements:
+  - class: DockerRequirement
     dockerPull: hubmap/scrna-analysis:2.1.11
+  - class: EnvVarRequirement
+    envDef:
+      TMPDIR: "/tmp"
+  - class: InlineJavascriptRequirement
 baseCommand: /opt/scvelo_analysis.py
 
 inputs:
   spliced_h5ad_file:
     type: File
     inputBinding:
-      position: 1
+      position: 0
 outputs:
   annotated_h5ad_file:
     type: File

@@ -13,10 +13,18 @@ inputs:
   assay:
     label: "scRNA-seq assay"
     type: string
-  threads:
+  salmon_threads:
     label: "Number of threads for Salmon"
-    type: int
-    default: 1
+    type: 'int?'
+    default: 4
+  trim_reads_threads:
+    label: "Number of threads for trim reads"
+    type: 'int?'
+    default: 2
+  fastqc_threads:
+    label: "Number of threads for trim reads"
+    type: 'int?'
+    default: 2
   expected_cell_count:
     type: int?
   keep_all_barcodes:
@@ -97,8 +105,10 @@ steps:
         source: fastq_dir
       assay:
         source: assay
-      threads:
-        source: threads
+      salmon_threads:
+        source: salmon_threads
+      trim_reads_threads:
+        source: trim_reads_threads
       expected_cell_count:
         source: expected_cell_count
       keep_all_barcodes:
@@ -116,7 +126,7 @@ steps:
       fastq_dir:
         source: fastq_dir
       threads:
-        source: threads
+        source: fastqc_threads
     out:
       - fastqc_dir
     run: steps/fastqc.cwl
@@ -161,3 +171,9 @@ steps:
       - qc_metrics
     run: steps/compute-qc-metrics.cwl
     label: "Compute QC metrics"
+
+$namespaces:
+  sbg: https://sevenbridges.com
+hints:
+  - class: 'sbg:maxNumberOfParallelInstances'
+    value: 4

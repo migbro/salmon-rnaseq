@@ -10,10 +10,14 @@ inputs:
   assay:
     label: "scRNA-seq assay"
     type: string
-  threads:
+  salmon_threads:
     label: "Number of threads for Salmon"
     type: int
     default: 1
+  trim_reads_threads:
+    label: "Number of threads for trim reads"
+    type: int
+    default: 2
   expected_cell_count:
     type: int?
   keep_all_barcodes:
@@ -54,7 +58,7 @@ steps:
       assay:
         source: assay
       threads:
-        source: threads
+        source: trim_reads_threads
     out: [trimmed_fastq_dir]
     run: salmon-quantification/trim-reads.cwl
   salmon:
@@ -66,7 +70,7 @@ steps:
       assay:
         source: assay
       threads:
-        source: threads
+        source: salmon_threads
       expected_cell_count:
         source: expected_cell_count
       keep_all_barcodes:
@@ -98,3 +102,6 @@ steps:
     out:
       - annotated_h5ad_file
     run: salmon-quantification/annotate-cells.cwl
+
+$namespaces:
+  sbg: https://sevenbridges.com

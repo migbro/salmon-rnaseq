@@ -3,6 +3,8 @@ class: CommandLineTool
 requirements:
   DockerRequirement:
     dockerPull: hubmap/scrna-trim-reads:2.1.11
+  ResourceRequirement:
+    coresMin: inputs.threads
 baseCommand: /opt/trim_reads.py
 label: Trim FASTQ files
 
