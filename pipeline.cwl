@@ -12,7 +12,11 @@ inputs:
     type: Directory[]
   assay:
     label: "scRNA-seq assay"
-    type: string
+    type:
+      type: enum
+      name: assay
+      symbols: ["10x_v2","10x_v2_sn","10x_v3","10x_v3_sn","snareseq","sciseq","slideseq"]
+    doc: "Assay type, please select from these only"
   salmon_threads:
     label: "Number of threads for Salmon"
     type: 'int?'
@@ -22,7 +26,7 @@ inputs:
     type: 'int?'
     default: 2
   fastqc_threads:
-    label: "Number of threads for trim reads"
+    label: "Number of threads for fastqc"
     type: 'int?'
     default: 2
   expected_cell_count:
