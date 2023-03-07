@@ -13,7 +13,12 @@ label: Run Salmon Alevin tool on FASTQ input
 
 inputs:
   assay:
-    type: string
+    label: "scRNA-seq assay"
+    type:
+      type: enum
+      name: assay
+      symbols: ["10x_v2","10x_v2_sn","10x_v3","10x_v3_sn","snareseq","sciseq","slideseq"]
+    doc: "Assay type, please select from these only"
     inputBinding:
       position: 0
   trimmed_fastq_dir:
